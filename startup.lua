@@ -3,15 +3,15 @@
 -- The light will automatically turn on at night and off during the day
 
 local CHECK_INTERVAL = 5 -- Check time every 5 seconds
-local LIGHT_ON_TIME = 17000 -- Time when lights should turn on (7 PM in Minecraft time)
-local LIGHT_OFF_TIME = 6000 -- Time when lights should turn off (6 AM in Minecraft time)
+local LIGHT_ON_TIME = 17.0 -- Time when lights should turn on (5 PM)
+local LIGHT_OFF_TIME = 6.0 -- Time when lights should turn off (6 AM)
 
 -- Function to check if it's nighttime
 local function isNightTime()
-    local mcTime = os.time() % 24000
+    local mcTime = os.time()
     
-    -- Night time is from 19000 to 6000 (wraps around midnight)
-    if mcTime >= LIGHT_ON_TIME or mcTime <= LIGHT_OFF_TIME then
+    -- Night time is from 19.0 to 6.0 (Minecraft time is 0-24 scale)
+    if mcTime >= 19.0 or mcTime <= 6.0 then
         return true
     else
         return false
@@ -32,9 +32,9 @@ end
 
 -- Function to get current time in readable format
 local function getTimeString()
-    local mcTime = os.time() % 24000
-    local hours = math.floor(mcTime / 1000)
-    local minutes = math.floor((mcTime % 1000) * 60 / 1000)
+    local mcTime = os.time()
+    local hours = math.floor(mcTime)
+    local minutes = math.floor((mcTime - hours) * 60)
     return string.format("%02d:%02d", hours, minutes)
 end
 
